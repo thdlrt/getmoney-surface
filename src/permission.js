@@ -17,6 +17,7 @@ router.beforeEach(async(to, from, next) => {
     }
     //如果刚刚登陆则自动存储信息
     if(token){
+        //获取信息失败表示非法token，删除token并返回登录
         await store.dispatch('getinfo').catch((err) => {
             auth.removeToken()
             return next('/login')

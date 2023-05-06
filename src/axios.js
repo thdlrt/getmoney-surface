@@ -1,6 +1,7 @@
  import axios from 'axios'
  import * as util from '~/composables/util'
  import * as auth from '~/composables/auth'
+ import store from "./store"
  const service = axios.create({
     baseURL: '/api',
  })
@@ -21,9 +22,15 @@
 service.interceptors.response.use(function (response) {
    //简化返回数据的格式
    return response.data.data;
- }, function (err) {
-   // 错误处理
-   util.toast(err.response.data.msg||'请求失败', 'error')
-   return Promise.reject(err);
+ }, function (error) {
+   // 错误提示
+   const msg = error.response.data.msg || "请求失败"
+    
+   if(msg == "非法token，请先登录！"){
+     store.dispatch("logout").finally(()=>location.reload())
+   }
+
+   util.toast(msg,"error")
+   return Promise.reject(error);
  });
  export default service

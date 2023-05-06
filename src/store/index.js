@@ -5,13 +5,18 @@ const store = createStore({
     state () {
       return {
         //用户信息
-        user: {}
+        user: {},
+        //menu宽度
+        asideWidth:"250px"
       }
     },
     mutations: {
         //记录用户信息
         SET_USERINFO(state, user) {
             state.user = user
+    },
+    handleAsideWidth(state){
+        state.asideWidth = state.asideWidth == "250px" ? "62px" : "250px";
     }
   },
     actions: {

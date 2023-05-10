@@ -1,5 +1,5 @@
 <template>
-    <div class="flex bg-blue-300 text-blue-600 font-bold text-xl h-[60px] fixed top-0 left-0 right-0 items-center">
+    <div class="flex bg-blue-300 text-blue-600 font-bold text-xl h-[60px] fixed top-0 left-0 right-0 items-center z-index" style="z-index:1000;">
         <!-- logo -->
         <span style="display: flex;" class="w-[180px] flex justify-end items-center">
             <img src="../../assets/logo.png" alt="Logo" class="h-12 w-39">
@@ -7,7 +7,7 @@
         <!-- 折叠 -->
         <el-tooltip effect="dark" content="折叠" placement="bottom">
             <el-icon class="ion-btn" @click="$store.commit('handleAsideWidth')">
-                <fold v-if="$store.state.asideWidth == '250px'" />
+                <fold v-if="$store.state.asideWidth == '240px'" />
                 <Expand v-else />
             </el-icon>
         </el-tooltip>

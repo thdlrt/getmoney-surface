@@ -6,8 +6,8 @@
         </el-header>
         <el-container>
             <!-- 侧边栏 -->
-            <el-aside>
-                <f-menu />
+            <el-aside :width="$store.state.asideWidth" style="transition: all 0.3s ease-in-out;">
+                <f-menu/>
             </el-aside>
             <!-- 主页面 -->
             <el-main>
@@ -25,6 +25,7 @@
 <script setup>
 import FHeader from './components/FHeader.vue'
 import FMenu from './components/FMenu.vue'
+
 </script>
 <style>
 .fade-enter-from {
@@ -53,7 +54,8 @@ import FMenu from './components/FMenu.vue'
 .fade-leave-active {
     transition: all 0.3s;
 }
-.fade-enter-active{
+
+.fade-enter-active {
     transition-delay: 0.3s;
 }
 </style>

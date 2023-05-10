@@ -1,5 +1,5 @@
 <template>
-    <el-drawer v-model="showDrawer" :title="title" :size="size" :destroy-on-close="destroyOnClose" :close-on-click-modal="false">
+    <el-drawer v-model="showDrawer" :title="title" :size="size" :destroy-on-close="destroyOnClose" :before-close="handleClose">
         <div class="formDrawer">
             <!-- 表单 -->
             <div class="body">
@@ -15,6 +15,7 @@
 </template>
 <script setup>
     import { ref } from 'vue'
+    import { ElMessageBox } from 'element-plus'
     const showDrawer = ref(false)
     const loading =ref(false)
     const showLoading = () => {
@@ -61,6 +62,17 @@
     const submit = () => {
         emit("submit")
     }
+    const handleClose = (done) => {
+  ElMessageBox.confirm('确认关闭？', '注意',{
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+    })
+    .then(() => {
+      done()
+    })
+    .catch(() => {
+    })
+}
 </script>
 <style>
     .formDrawer {

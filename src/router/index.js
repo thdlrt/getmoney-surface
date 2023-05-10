@@ -2,7 +2,6 @@ import{
     createRouter,
     createWebHashHistory
 }from 'vue-router'
-import Index from '~/pages/index.vue'
 import Login from '~/pages/login.vue' 
 import NotFound from '~/pages/404.vue'
 import User from '~/layouts/user.vue'
@@ -12,10 +11,7 @@ import News from '~/pages/data/news.vue'
 import Search from '~/pages/data/search.vue'
 import Advise from '~/pages/ai/advise.vue'
 import Future from '~/pages/ai/future.vue'
-import Try from '~/pages/imitate/try.vue'
-import Virtual from '~/pages/imitate/virtual.vue'
-import Invest from '~/pages/user/invest.vue'
-import Record from '~/pages/user/record.vue'
+import UserCenter from '~/pages/user/user.vue'
 const routes = [{
     path:'/',
     component:User,
@@ -44,18 +40,6 @@ const routes = [{
             title:'新闻速递'
         }
     },{
-        path:'/imitate/try',
-        component:Try,
-        meta :{
-            title:'策略回测'
-        }
-    },{
-        path:'/imitate/virtual',
-        component:Virtual,
-        meta :{
-            title:'模拟交易'
-        }
-    },{
         path:'/ai/future',
         component:Future,
         meta :{
@@ -68,18 +52,12 @@ const routes = [{
             title:'投资组合'
         }
     },{
-        path:'/user/invest',
-        component:Invest,
+        path:'/user',
+        component:UserCenter,
         meta :{
-            title:'我的投资'
+            title:'个人中心'
         }
-    },{
-        path:'/user/record',
-        component:Record,
-        meta :{
-            title:'交易记录'
-        }
-    },]
+    }]
 },{
     path: '/login', 
     component: Login,

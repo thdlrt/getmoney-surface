@@ -3,7 +3,7 @@
     <div class="fmenu">
         <el-menu default-active="2" class="border-0" @select="handleSelect" :collapse="isCollapse" :unique-opened="true">
             <template v-for="(item, index) in menus" :key="index">
-                <div class="bg-blue-50  overflow-hidden">
+                <div class="bg-blue-100  overflow-hidden">
                     <el-sub-menu v-if="item.children && item.children.length > 0" :index="item.name">
                         <template #title>
                             <el-icon>
@@ -40,7 +40,7 @@ const handleSelect = (path) => {
 }
 //折叠菜单
 const isCollapse = computed(() => {
-    return !(store.state.asideWidth == '250px')
+    return !(store.state.asideWidth == '240px')
 })
 //列表内容
 const menus = [{
@@ -58,23 +58,7 @@ const menus = [{
         "name": "　　　自选搜索",
         "icon": "Search",
         "frontpath": "/data/search",
-    }, {
-        "name": "　　　新闻速递",
-        "icon": "Share",
-        "frontpath": "/data/news",
-    }]
-}, {
-    "name": "　　　仿真模拟",
-    "icon": "Monitor",
-    "children": [{
-        "name": "　　　策略回测",
-        "icon": "Refresh",
-        "frontpath": "/imitate/try",
-    }, {
-        "name": "　　　模拟交易",
-        "icon": "Coin",
-        "frontpath": "/imitate/virtual",
-    }]
+    },]
 }, {
     "name": "　　　AI策略",
     "icon": "Grid",
@@ -88,25 +72,21 @@ const menus = [{
         "frontpath": "/ai/advise",
     }]
 }, {
-    "name": "　　　个人收益",
+    "name": "　　　新闻速递",
+    "icon": "Share",
+    "frontpath": "data/news",
+}, {
+    "name": "　　　个人中心",
     "icon": "User",
-    "children": [{
-        "name": "　　　我的投资",
-        "icon": "Trophy",
-        "frontpath": "/user/invest",
-    }, {
-        "name": "　　　交易记录",
-        "icon": "Timer",
-        "frontpath": "/user/record",
-    }]
+    "frontpath": "/user",
 }]
 </script>
 <style>
 .fmenu {
-    top: 64px;
+    top: 60px;
     bottom: 0;
     left: 0;
     overflow: auto;
-    @apply shadow-md fixed bg-blue-50;
+    @apply shadow-md fixed bg-blue-100;
 }
 </style>

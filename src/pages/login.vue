@@ -9,7 +9,7 @@
                 <img src="../assets/logo.png" alt="Logo" class="absolute left-5 top-5 h-16 w-56">
             </div>
             <div style="position: relative; z-index: 1;">
-                <div class="font-bold text-8xl text-light-50 mb-4">Welcom</div>
+                <div class="font-bold text-8xl text-light-50 mb-4">Welcome</div>
                 <div class="font-bold text-7xl text-light-50 mb-4">Back!</div>
                 <div class="text-3xl text-gray-200">FinGenius在线量化投资交易平台</div>
             </div>
@@ -49,6 +49,9 @@
                         :loading="loading">登录</el-button>
                     <el-button :round="true" @click="onSubmit_sign" class="w-[118px]">注册</el-button>
                 </el-form-item>
+                <div class="flex justify-center">
+                    <el-button text type='primary' @click="onSubmit_forget">找回密码</el-button>
+                </div>
             </el-form>
         </el-col>
     </el-row>
@@ -180,6 +183,12 @@
             </el-form-item>
         </el-form>
     </form-drawer>
+    <!-- 忘记密码抽屉 -->
+    <form-drawer ref="formDrawerRef3" title="找回密码" destroyOnClose @submit="onSubmit3">
+        <el-form :model="form3" :rules="rules3" ref="formRef3" label-width="90px">
+
+        </el-form>
+    </form-drawer>
 </template> 
 <style scoped>
 .logo {
@@ -188,7 +197,8 @@
     left: 0;
     padding: 10px;
 }
-.leftcol{
+
+.leftcol {
     position: relative;
     overflow: hidden;
     @apply flex items-center justify-center;
@@ -320,6 +330,38 @@ const rules2 = {
     ],
 }
 const onSubmit2 = () => {
+    formRef2.value.validate((valid) => {
+        if (valid) {
+            //防止重复点击
+            formDrawerRef.value.showLoading()
+            signup(form2).then(res => {//注册成功返回登陆
+                util.toast('注册成功,请返回登录');
+                formDrawerRef.value.hideLoading()
+            }).catch(err => {//校验不通过,需要修改
+                formDrawerRef.value.hideLoading()
+            })
+        } else {
+            return false
+        }
+    })
+}
+//忘记密码
+const formRef3 = ref(null)
+const formDrawerRef3 = ref(null)
+const onSubmit_forget = () => {
+    formDrawerRef3.value.open()
+}
+const form3 = reactive({
+    username: '',
+
+})
+const rules3 = {
+    username: [
+        { required: true, message: '用户名不能为空', trigger: 'blur' },
+    ],
+
+}
+const onSubmit3 = () => {
     formRef2.value.validate((valid) => {
         if (valid) {
             //防止重复点击

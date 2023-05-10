@@ -7,7 +7,7 @@ const store = createStore({
         //用户信息
         user: {},
         //menu宽度
-        asideWidth:"250px"
+        asideWidth:"240px"
       }
     },
     mutations: {
@@ -16,7 +16,7 @@ const store = createStore({
             state.user = user
     },
     handleAsideWidth(state){
-        state.asideWidth = state.asideWidth == "250px" ? "62px" : "250px";
+        state.asideWidth = state.asideWidth == "240px" ? "62px" : "240px";
     }
   },
     actions: {

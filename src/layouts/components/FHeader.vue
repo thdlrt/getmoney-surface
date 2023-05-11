@@ -2,7 +2,7 @@
     <div class="flex bg-blue-300 text-blue-600 font-bold text-xl h-[60px] fixed top-0 left-0 right-0 items-center z-index" style="z-index:1000;">
         <!-- logo -->
         <span style="display: flex;" class="w-[180px] flex justify-end items-center">
-            <img src="../../assets/logo.png" alt="Logo" class="h-12 w-39">
+            <img src="../../assets/logo.png" alt="Logo" class="h-12 w-39 cursor-pointer" @click="onback">
         </span>
         <!-- 折叠 -->
         <el-tooltip effect="dark" content="折叠" placement="bottom">
@@ -299,6 +299,7 @@ const rules2_1 = {
     ],
     email: [
         { required: true, message: '请输入邮箱', trigger: 'blur' },
+        { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
     ],
     birthday: [
         { required: true, message: '请选择生日', trigger: 'blur' },
@@ -313,6 +314,7 @@ const rules2_2 = {
     ],
     email: [
         { required: true, message: '请输入邮箱', trigger: 'blur' },
+        { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
     ],
     birthday: [
         { required: true, message: '请选择生日', trigger: 'blur' },
@@ -384,7 +386,10 @@ const showquestion = () => {
     rules2.value = rules2_2;
     formRef2.value.$forceUpdate();
 }
-
+//返回
+const onback = () => {
+    router.push('/login')
+}
 </script>
 <style>
 /* 按钮样式 */

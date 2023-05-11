@@ -49,7 +49,7 @@
         <el-row :gutter="20">
             <!-- 七日收益 -->
             <el-col :md="14" :offset="0">
-                <el-card class="box-card rounded-2xl" shadow="hover">
+                <el-card class="box-card c" shadow="hover">
                     <div id="week" class="h-100 " ref="el_week"></div>
                 </el-card>
             </el-col>

@@ -12,6 +12,7 @@ import Search from '~/pages/data/search.vue'
 import Advise from '~/pages/ai/advise.vue'
 import Future from '~/pages/ai/future.vue'
 import UserCenter from '~/pages/user/user.vue'
+import Forget from '~/pages/forget.vue'
 const routes = [{
     path:'/',
     component:User,
@@ -63,6 +64,12 @@ const routes = [{
     component: Login,
     meta :{
         title:'登录'
+    }
+},{
+    path: '/forget', 
+    component: Forget,
+    meta :{
+        title:'找回密码'
     }
 },{ 
     path: '/:pathMatch(.*)*', 

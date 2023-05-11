@@ -74,7 +74,7 @@ const menus = [{
 }, {
     "name": "　　　新闻速递",
     "icon": "Share",
-    "frontpath": "data/news",
+    "frontpath": "/data/news",
 }, {
     "name": "　　　个人中心",
     "icon": "User",

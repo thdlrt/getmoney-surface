@@ -43,6 +43,10 @@
                         </template>
                     </el-input>
                 </el-form-item>
+                <el-form-item prop="checknum">
+                    <el-input type="text" v-model="form.checknum" placeholder="请输入图形验证码" />
+                    <CheckNum ref="checknum" />
+                </el-form-item>
                 <!-- 按钮 -->
                 <el-form-item>
                     <el-button :round="true" type="primary" @click="onSubmit" class="w-[120px] bg-blue-400"
@@ -183,12 +187,6 @@
             </el-form-item>
         </el-form>
     </form-drawer>
-    <!-- 忘记密码抽屉 -->
-    <form-drawer ref="formDrawerRef3" title="找回密码" destroyOnClose @submit="onSubmit3">
-        <el-form :model="form3" :rules="rules3" ref="formRef3" label-width="90px">
-
-        </el-form>
-    </form-drawer>
 </template> 
 <style scoped>
 .logo {
@@ -206,28 +204,40 @@
 </style>
 <script setup>
 import { ref, reactive } from 'vue'
-import { login, signup } from '../api/user'
+import { login, signup, forgetpassword, sendemail } from '../api/user'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import * as auth from '~/composables/auth'
 import * as util from '~/composables/util'
 import FormDrawer from '~/components/FormDrawer.vue'
+import CheckNum from '~/components/CheckNum.vue'
+import { watchIgnorable } from '@vueuse/core'
 
 const form = reactive({
     username: '',
     password: '',
+    checknum: '',
 })
 
 const formRef = ref(null)
 const loading = ref(false)
 const router = useRouter()
 const store = useStore()
+const checknum = ref(null)
 // 提交判断
 const onSubmit = () => {
     formRef.value.validate((valid) => {
         if (valid) {
             //防止重复点击
             loading.value = true
+            //先判断验证码是否输入正确
+            if (!checknum.value.checkinput(form.checknum)) {
+                util.toast('验证码输入错误', 'error')
+                checknum.value.reload()
+                form.checknum = ''
+                loading.value = false
+                return false
+            }
             login(form.username, form.password)
                 .then(res => {
                     util.toast('登录成功');
@@ -291,6 +301,7 @@ const rules2 = {
     ],
     email: [
         { required: true, message: '请输入邮箱', trigger: 'blur' },
+        { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
     ],
     birthday: [
         { required: true, message: '请选择生日', trigger: 'blur' },
@@ -337,6 +348,7 @@ const onSubmit2 = () => {
             signup(form2).then(res => {//注册成功返回登陆
                 util.toast('注册成功,请返回登录');
                 formDrawerRef.value.hideLoading()
+                router.push("/login")
             }).catch(err => {//校验不通过,需要修改
                 formDrawerRef.value.hideLoading()
             })
@@ -348,29 +360,73 @@ const onSubmit2 = () => {
 //忘记密码
 const formRef3 = ref(null)
 const formDrawerRef3 = ref(null)
+//发送按钮控制
+const SendWait = ref({
+    state: false,
+    text: '发送验证码'
+})
+
 const onSubmit_forget = () => {
-    formDrawerRef3.value.open()
+    router.push('/forget')
 }
 const form3 = reactive({
     username: '',
-
+    email: '',
+    checknum: '',
+    password: '',
+    repassword: '',
 })
 const rules3 = {
     username: [
-        { required: true, message: '用户名不能为空', trigger: 'blur' },
+        { required: true, message: '请输入用户名', trigger: 'blur' },
+    ],
+    email: [
+        { required: true, message: '请输入邮箱', trigger: 'blur' },
+    ],
+    checknum: [
+        { required: true, message: '请输入邮箱验证码', trigger: 'blur' },
+    ],
+    password: [
+        { required: true, message: '请输入新密码', trigger: 'blur' },
+    ],
+    repassword: [
+        { required: true, message: '请重新输入新密码', trigger: 'blur' },
     ],
 
 }
+const btemail = ref(null)
+//发送邮箱验证
+const onSendEmail = () => {
+    sendemail(form3).then(res => {
+        util.toast('邮件发送成功，注意查收');
+        wait()
+    })
+}
+//发送验证码按钮冷却系统
+function wait(){
+    SendWait.value.state=true
+    let time=30
+    let timer=setInterval(()=>{
+        time--
+        SendWait.value.text=`${time}s后重发`
+        if(time==0){
+            clearInterval(timer)
+            SendWait.value.state=false
+            SendWait.value.text='发送验证码'
+        }
+    },1000)
+}
+
 const onSubmit3 = () => {
-    formRef2.value.validate((valid) => {
+    formRef3.value.validate((valid) => {
         if (valid) {
             //防止重复点击
-            formDrawerRef.value.showLoading()
-            signup(form2).then(res => {//注册成功返回登陆
-                util.toast('注册成功,请返回登录');
-                formDrawerRef.value.hideLoading()
-            }).catch(err => {//校验不通过,需要修改
-                formDrawerRef.value.hideLoading()
+            formDrawerRef3.value.showLoading()
+            forgetpassword(form3).then(res => {//修改成功返回登陆
+                util.toast('修改成功,请返回登录');
+                router.push("/login")
+            }).finally(() => {
+                formDrawerRef3.value.hideLoading()
             })
         } else {
             return false

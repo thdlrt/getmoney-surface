@@ -20,6 +20,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
+      "/news": {
+        target: "http://v.juhe.cn/toutiao",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/news/, ""),
+      },
     },
   },
 });

@@ -1,10 +1,10 @@
 <template>
-    <el-container>
+    <el-container style="height:100vh;">
         <!-- 头部 -->
         <el-header>
             <f-header />
         </el-header>
-        <el-container>
+        <el-container class="overflow-hidden">
             <!-- 侧边栏 -->
             <el-aside :width="$store.state.asideWidth" style="transition: all 0.3s ease-in-out;">
                 <f-menu/>

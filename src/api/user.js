@@ -1,14 +1,31 @@
 import axios from '~/axios'
 // 登录验证接口
 export function login(username, password){
-    return axios.post("/admin/login",{
+    return axios.post("/api/admin/login",{
         username,
         password
     })
 }
+//找回密码
+export function forgetpassword(data){
+    return axios.post("/api/admin/forgetpassword",{
+        username:data.username,
+        email:data.email,
+        checknum:data.checknum,
+        password:data.password,
+        repassword:data.repassword,
+    })
+}
+//发送验证码
+export function sendemail(data){
+    return axios.get("/api/admin/sendemail",{
+        username:data.username,
+        email:data.email,
+    })
+}
 //用户注册
 export function signup(data){
-    return axios.post("/admin/signup",{
+    return axios.post("/api/admin/signup",{
         username:data.username,
         password:data.password,
         repassword:data.repassword,
@@ -18,20 +35,25 @@ export function signup(data){
         question:[data.q1,data.q2,data.q3,data.q4,data.q5,data.q6,data.q7,data.q8,data.q9,data.q10],
     })
 }
-
+//获取验证码
+export function getnum(){
+    return axios.get("https://www.mxnzp.com/api/verifycode/code?len=5&type=0&app_id=kkmbiknfifjroheo&app_secret=SEtENi8vcDZORjRXSlBPeXBFcTNlQT09",{
+        type:'0',
+    })
+}
 // 获取用户信息接口
 export function getinfo(){
-    return axios.post("/admin/getinfo")
+    return axios.post("/api/admin/getinfo")
 }
 
 //修改密码
 export function updatepassword(data){
-    return axios.post("/admin/updatepassword",data)
+    return axios.post("/api/admin/updatepassword",data)
 }
 
 //修改个人信息
 export function updateinfo(data){
-    return axios.post("/admin/updateinfo",{
+    return axios.post("/api/admin/updateinfo",{
         username:data.username,
         email:data.email,
         sex:data.sex,
@@ -41,10 +63,10 @@ export function updateinfo(data){
 }
 
 export function gettradeinfo(){
-    //return axios.post("/admin/gettradeinfo")
+    //return axios.post("/api/admin/gettradeinfo")
     /*
-data={
-    week=[{
+data:{
+    week:[{
         income:当日收益
         date:日期
         detail:[{

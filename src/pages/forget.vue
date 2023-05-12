@@ -8,7 +8,7 @@
             </span>
         </div>
         <!-- 顶部内容 -->
-        <el-card class="box-card rounded-4xl relative" shadow="always" style="width: 45%;height: 55%;">
+        <el-card class="box-card rounded-4xl relative" shadow="always" style="width: 40%;height: 55%;">
             <el-steps :active="step" finish-status="success" style="width:90%;margin: 0 auto;" simple class="rounded-xl">
                 <el-step title="验证邮箱" icon="Message" />
                 <el-step title="修改密码" icon="Edit" />
@@ -128,7 +128,7 @@ const onright = () => {
     if (step.value == 1) {//修改密码
         formRef2.value.validate((valid) => {
             if (!valid) return
-            forgetpassword(form2.value).then(res => {
+            forgetpassword(form1.value.username,form1.value.email,form2.value).then(res => {
                 step.value++
                 left.value = false
                 util.toast("修改密码成功！")

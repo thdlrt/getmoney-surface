@@ -5,12 +5,11 @@ import{
 import Login from '~/pages/login.vue' 
 import NotFound from '~/pages/404.vue'
 import User from '~/layouts/user.vue'
-import Hot from '~/pages/data/hot.vue'
 import Main from '~/pages/data/main.vue'
 import News from '~/pages/data/news.vue'
-import Search from '~/pages/data/search.vue'
 import Advise from '~/pages/ai/advise.vue'
 import Future from '~/pages/ai/future.vue'
+import Test from '~/pages/ai/test.vue'
 import UserCenter from '~/pages/user/user.vue'
 import Forget from '~/pages/forget.vue'
 const routes = [{
@@ -21,18 +20,6 @@ const routes = [{
         component:Main,
         meta :{
             title:'大盘数据'
-        }
-    },{
-        path:'/data/hot',
-        component:Hot,
-        meta :{
-            title:'热门股票'
-        }
-    },{
-        path:'/data/search',
-        component:Search,
-        meta :{
-            title:'自选搜索'
         }
     },{
         path:'/data/news',
@@ -51,6 +38,12 @@ const routes = [{
         component:Advise,
         meta :{
             title:'投资组合'
+        }
+    },{
+        path:'/ai/test',
+        component:Test,
+        meta :{
+            title:'策略回测'
         }
     },{
         path:'/user',

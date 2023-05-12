@@ -7,10 +7,10 @@ export function login(username, password){
     })
 }
 //找回密码
-export function forgetpassword(data){
+export function forgetpassword(username, email, data){
     return axios.post("/api/admin/forgetpassword",{
-        username:data.username,
-        email:data.email,
+        username:username,
+        email:email,
         checknum:data.checknum,
         password:data.password,
         repassword:data.repassword,

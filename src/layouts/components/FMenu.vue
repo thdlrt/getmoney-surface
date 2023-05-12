@@ -46,19 +46,7 @@ const isCollapse = computed(() => {
 const menus = [{
     "name": "　　　数据监测　　　",
     "icon": "Histogram",
-    "children": [{
-        "name": "　　　大盘数据",
-        "icon": "Upload",
-        "frontpath": "/data/main",
-    }, {
-        "name": "　　　热门股票",
-        "icon": "PieChart",
-        "frontpath": "/data/hot",
-    }, {
-        "name": "　　　自选搜索",
-        "icon": "Search",
-        "frontpath": "/data/search",
-    },]
+    "frontpath": "/data/main"
 }, {
     "name": "　　　AI策略",
     "icon": "Grid",
@@ -70,6 +58,10 @@ const menus = [{
         "name": "　　　投资组合",
         "icon": "WalletFilled",
         "frontpath": "/ai/advise",
+    }, {
+        "name": "　　　策略回测",
+        "icon": "Switch",
+        "frontpath": "/ai/test",
     }]
 }, {
     "name": "　　　新闻速递",

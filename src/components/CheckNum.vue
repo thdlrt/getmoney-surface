@@ -15,7 +15,7 @@
             url.value = res.verifyCodeImgUrl
             checknum = res.verifyCode.toLowerCase()
         }).catch(err => {
-           util.toast("刷新过于频繁，请稍后", "error")
+           util.toast("验证码加载失败，请刷新页面重试", "error")
         })
     }
     reload()

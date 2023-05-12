@@ -19,6 +19,7 @@
     "echarts-stat": "^1.2.0",
     "element-plus": "^2.3.4",
     "gsap": "^3.11.5",
+    "jquery": "^3.7.0",
     "nprogress": "^0.2.0",
     "universal-cookie": "^4.0.4",
     "vue": "^3.2.47",

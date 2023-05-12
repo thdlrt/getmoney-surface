@@ -1,5 +1,5 @@
 <template>
     <div>
-        search
+        策略回测
     </div>
 </template>

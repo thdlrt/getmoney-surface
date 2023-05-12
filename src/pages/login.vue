@@ -244,6 +244,9 @@ const onSubmit = () => {
                     //保存cookie
                     auth.setToken(res.token)
                     router.push("/data/main")
+                }).catch((err)=>{
+                    checknum.value.reload()
+                    form.checknum = ''
                 }).finally(() => {
                     //复位
                     loading.value = false

@@ -69,14 +69,16 @@
             <!-- 头像上传 -->
             <span>上传头像</span>
             <el-upload drag :action="uploadImage" :headers="{ token }" name="img" :on-success="uploadSuccess"
-                :on-error="uploadError" :data="data">
+                :on-error="uploadError" :data="data"
+                accept="image/png, image/jpeg,  image/jpg"
+                >
                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                 <div class="el-upload__text">
                     拖拽文件或<em>点击选择文件</em>
                 </div>
                 <template #tip>
                     <div class="el-upload__tip">
-                        仅限jpg/png文件 大小不超过500kb
+                        仅限jpg/png文件 大小不超过2mb
                     </div>
                 </template>
             </el-upload>

@@ -1,5 +1,5 @@
 <template>
-    <el-card class="box-card rounded-2xl" shadow="hover" style="height:100%;position: relative;">
+    <el-card class="box-card rounded-2xl" shadow="always" style="height:100%;position: relative;">
         <el-row :gutter="0" style="position:absolute;top:10px;bottom:10px;left:10px;right:10px;" class="overflow-hidden">
             <!-- 内容 -->
             <!-- 概览 -->

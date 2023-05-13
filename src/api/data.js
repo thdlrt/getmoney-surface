@@ -3,7 +3,7 @@ import axios from "~/axios";
 const key1 = "022856a900e4d201e1d865f086686383";
 const key2 = "1718d2b1c85886ace9c8374a65a5aa12";
 export function getnews(page) {
-  return axios.post("/news/index", {
+  return axios.post("/api/news/index", {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -18,7 +18,7 @@ export function getnews(page) {
 }
 //获取新闻详细信息
 export function getcontent(id) {
-  return axios.post("/news/content", {
+  return axios.post("/api/news/content", {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -30,7 +30,7 @@ export function getcontent(id) {
 }
 //获取热门股票
 export function gethot() {
-  //return axios.get("/api/gethot")
+  //return axios.get("/api/stock/gethot")
   return [
     {
       name: "三峡能源",
@@ -91,13 +91,13 @@ export function gethot() {
 }
 //搜索股票
 export function search(name) {
-  return axios.post("/api/search", {
+  return axios.post("/api/stock/search", {
     name: name,
   });
 }
 //获取用户自选
 export function getchoice() {
-  //return axios.post("/api/getchoice")
+  //return axios.post("/api/stock/getchoice")
   return [
     {
       name: "中国中车",
@@ -128,19 +128,19 @@ export function getchoice() {
 }
 //增加选择
 export function addchoice(name) {
-  return axios.post("/api/addchoice", {
+  return axios.post("/api/stock/addchoice", {
     name: name,
   });
 }
 //删除自选
 export function delchoice(name) {
-  return axios.post("/api/delchoice", {
+  return axios.post("/api/stock/delchoice", {
     name: name,
   });
 }
 //获取股票信息
 export function getstock(name) {
-  // return axios.post("/api/getstock",{
+  // return axios.post("/api/stock/getstock",{
   //     name:name,
   // })
   return {
@@ -185,7 +185,7 @@ export function getstock(name) {
 }
 //获取股票分时信息
 export function getstockh(name) {
-  // return axios.post("/api/getstockh",{
+  // return axios.post("/api/stock/getstockh",{
   //     name:name,
   // })
   return {
@@ -439,7 +439,7 @@ export function getstockh(name) {
 }
 //获取股票k线信息
 export function getstockk(name) {
-  // return axios.post("/api/getstockk",{
+  // return axios.post("/api/stock/getstockk",{
   //     name:name,
   // })
   //数据模型 time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9

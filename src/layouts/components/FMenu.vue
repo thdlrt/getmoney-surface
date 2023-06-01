@@ -68,9 +68,17 @@ const menus = [{
     "icon": "Share",
     "frontpath": "/data/news",
 }, {
-    "name": "　　　个人中心",
+    "name": "　　　用户相关",
     "icon": "User",
-    "frontpath": "/user",
+    "children": [{
+        "name": "　　　个人中心",
+        "icon": "Files",
+        "frontpath": "/user/center",
+    }, {
+        "name": "　　　钱包管理",
+        "icon": "CreditCard",
+        "frontpath": "/user/wallet",
+    }]
 }]
 </script>
 <style>

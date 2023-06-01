@@ -56,6 +56,7 @@ const stop = ref(false)
 //无缝滚动
 const news = ref([])
 const content = ref(null)
+//TODO新的获取方式
 const load = () => {
     getnews(page.value).then(res => {
         news.value = news.value.concat(res.data)

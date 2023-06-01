@@ -1,18 +1,26 @@
 <template>
+    <trade :name="stockData.name" :price="stockData.price" :id="stockData.price" ref="tradedialog"/>
     <el-card class="box-card rounded-2xl" shadow="always" style="height:100%;position: relative;">
         <el-row :gutter="10" style="position:absolute;top:10px;bottom:10px;left:10px;right:10px;" class="overflow-hidden">
             <!-- 侧栏 -->
             <el-col :md="8" :sm="8" :xs="10" :offset="0" style="border-right: 2px solid #838383;height:100%;"
                 class="overflow-hidden">
-                <StockList @detail="ondetail" :label="'查看'"/>
+                <StockList @detail="ondetail" :label="'查看'" />
             </el-col>
             <!-- 主体 -->
             <el-col :md="16" :sm="16" :xs="14" :offset="0" class="overflow-x-hidden overflow-y-auto" style="height:100%;">
                 <!-- 概述 -->
                 <div>
-                    <div style="border-bottom: 2px solid #87afff;height:100%;" class="pb-2">
-                        <span class="text-xl ml-5">{{ stockData.name }}</span>
-                        <span class="text-sm text-gray-500 ml-4">({{ stockData.id }})</span>
+                    <div style="border-bottom: 2px solid #87afff;height:100%;" class="pb-2 flex justify-between">
+                        <div>
+                            <span class="text-xl ml-5">{{ stockData.name }}</span>
+                            <span class="text-sm text-gray-500 ml-4">({{ stockData.id }})</span>
+                        </div>
+                        <!-- 交易按钮 -->
+                        <el-button-group>
+                            <el-button type="primary" icon="Download" @click="tradedialog.buy()">买入</el-button>
+                            <el-button type="danger" icon="Upload" @click="tradedialog.sell()">卖出</el-button>
+                        </el-button-group>
                     </div>
                     <el-row :gutter="4">
                         <el-col :lg="6" :md="10" :offset="0" style="height:100%;">
@@ -71,12 +79,14 @@ import { getstock, getstockh, getstockk } from '~/api/data.js'
 import { UpTwo, DownTwo } from '@icon-park/vue-next';
 import StockChart from '~/components/StockChart.vue'
 import StockList from '~/components/StockList.vue'
+import trade from '~/components/trade.vue'
 const activeChart = ref("0")
 const stockData = ref(null)
 const stockDatak = ref([])
 const stockDatah = ref(null)
+const tradedialog = ref(null)
 var timerId
-
+//TODO实时刷新
 //刷新h
 function geth() {
     //开始追踪h更新

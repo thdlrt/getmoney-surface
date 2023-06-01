@@ -13,39 +13,32 @@
                     <!-- 表单 -->
                     <el-form :model="form" :rules="rules" ref="formRef" style="border-bottom: 2px solid #e4e7ed;"
                         class="mr-8">
-                        <el-row :gutter="12">
-                            <el-col :lg="2" :md="4" :sm="5" :offset="0" class="pb-1">
+                        <el-row :gutter="8">
+                            <el-col :lg="3" :md="3" :sm="6" :offset="0" class="pb-1">
                                 <el-button type="primary" :icon="icon" @click="onleft" class="float-left" />
                             </el-col>
-                            <el-col :lg="4" :md="6" :sm="8" :offset="0">
-                                <el-form-item prop="name" :span="24">
-                                    <el-input v-model="form.name" disabled placeholder="请选择股票" />
+                            <el-col :lg="8" :md="6" :sm="18" :offset="0">
+                                <el-form-item prop="name" :span="24" style="width:100%">
+                                    <el-input v-model="form.name" disabled placeholder="请选择要预测的股票" />
                                 </el-form-item>
                             </el-col>
-                            <el-col :lg="10" :md="14" :sm="11" :offset="0">
-                                <el-form-item prop="date" :span="24">
-                                    <el-date-picker v-model="form.date" type="daterange" unlink-panels range-separator="To"
-                                        start-placeholder="开始时间" end-placeholder="结束时间" :shortcuts="shortcuts" />
-                                </el-form-item>
-                            </el-col>
-                            <el-col :lg="5" :md="16" :sm="16" :offset="0">
-                                <el-form-item prop="alogrithm" :span="24">
-                                    <el-select v-model="form.alogrithm" multiple placeholder="请选择预测模型">
+                            <el-col :lg="9" :md="10" :sm="16" :offset="0">
+                                <el-form-item prop="time" :span="24" style="width: 100%" >
+                                    <el-select v-model="form.time" placeholder="请选择预测区间">
                                         <el-option v-for="item in options" :key="item.value" :label="item.label"
                                             :value="item.value" />
                                     </el-select>
                                 </el-form-item>
                             </el-col>
-                            <el-col :lg="3" :md="8" :sm="8" :offset="0">
-                                <el-button type="primary" icon="Cpu" @click="onSubmit"
-                                    :loading="iconloading">开始预测</el-button>
+                            <el-col :lg="4" :md="5" :sm="8" :offset="0">
+                                <el-button type="primary" icon="Cpu" @click="onSubmit" :loading="iconloading"
+                                    style="width:100%">开始预测</el-button>
                             </el-col>
                         </el-row>
                     </el-form>
                     <!-- 预测主题内容 -->
                     <div class="overflow-x-hidden overflow-y-auto" style="width: 100%;height:100%">
                         <!-- 进度条 -->
-
                         <el-steps :active="step" align-center class="mt-40" finish-status="success">
                             <el-step title="选择股票" description="点击预测按钮选择股票" />
                             <el-step title="配置信息" description="选择时间区间与模型" />
@@ -58,7 +51,7 @@
                 </el-col>
             </el-row>
             <!-- 预测结果 -->
-            <el-row :gutter="10" v-else style="position:absolute;top:10px;bottom:10px;left:10px;right:10px;"
+            <el-row :gutter="14" v-else style="position:absolute;top:10px;bottom:10px;left:10px;right:10px;"
                 class="overflow-hidden">
                 <el-col :sm="8" :xs="10" :offset="0" style="border-right: 2px solid #838383;height:100%;"
                     class="overflow-hidden">
@@ -68,9 +61,6 @@
                     </div>
                     <!-- 预测表格 -->
                     <div class="mt-3 ml-1 mr-2" style="width: 100%;height:100%;">
-                        <el-tabs v-model="activealg" class="demo-tabs">
-                            <el-tab-pane v-for="(item, index) in form.alogrithm" :key="index" :label="item" :name="index" />
-                        </el-tabs>
                         <el-table :data="tableData" stripe style="width: 100%;height:100%;">
                             <el-table-column prop="date" label="日期" />
                             <el-table-column prop="name" label="价格" />
@@ -86,9 +76,9 @@
     </el-card>
 </template>
 <script setup>
-import { ref, watch, reactive, onMounted } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import StockList from '~/components/StockList.vue'
-import { getalogrithm, getfuture } from '~/api/ai.js'
+import { getfuture } from '~/api/ai.js'
 import { ElMessageBox } from 'element-plus'
 import * as echarts from 'echarts';
 import { useResizeObserver } from '@vueuse/core'
@@ -96,32 +86,25 @@ const icon = ref('ArrowLeft')
 const leftlen = ref(8)
 const rightlen = ref(16)
 const formRef = ref(null)
-const options = ref([])
 const iconloading = ref(false)
 const step = ref(0)
 const futuredata = ref(null)
 const showres = ref(false)
 const el_future = ref(null)
-const activealg = ref(0)
 const tableData = ref([])
+const options = ref([{
+    value:3,
+    label:'未来3个月'
+},{
+    value:6,
+    label:'未来6个月'
+},{
+    value:12,
+    label:'未来12个月'
+}])
 const format = (percentage) => (percentage === 100 ? '' : `${percentage}%`)
 var myChart
 var resizeObserver
-//监听
-watch(() => activealg.value, (newValue) => {
-    tableData.value = []
-    for (let i = 0; i < futuredata.value[newValue + 1].length; i++) {
-        tableData.value.push({
-            date: futuredata.value[newValue + 1][i][1],
-            name: futuredata.value[newValue + 1][i][2],
-        })
-    }
-})
-//初始化算法列表
-// getalogrithm().then(res=>{
-//     options.value = res.data
-// })
-options.value = getalogrithm()
 //选中股票
 const ondetail = (row) => {
     form.name = row.name
@@ -131,65 +114,24 @@ const ondetail = (row) => {
 //预测表单f
 const form = reactive({
     name: '',
-    date: '',
-    alogrithm: [],
+    time: '',
 })
 // 表单验证
 const rules = {
     name: [
-        { required: true, message: '请选择日期', trigger: 'blur' },
+        { required: true, message: '请选择股票', trigger: 'blur' },
     ],
-    date: [
-        { required: true, message: '请选择日期', trigger: 'blur' },
-    ],
-    alogrithm: [
-        { required: true, message: '请至少选择一种预测算法', trigger: 'blur' },
+    time: [
+        { required: true, message: '请选择预测区间', trigger: 'blur' },
     ],
 }
-const shortcuts = [
-    {
-        text: '未来一周',
-        value: () => {
-            const end = new Date()
-            const start = new Date()
-            end.setTime(end.getTime() + 3600 * 1000 * 24 * 7)
-            return [start, end]
-        },
-    },
-    {
-        text: '未来两周',
-        value: () => {
-            const end = new Date()
-            const start = new Date()
-            end.setTime(end.getTime() + 2 * 3600 * 1000 * 24 * 7)
-            return [start, end]
-        },
-    },
-    {
-        text: '未来一月',
-        value: () => {
-            const end = new Date()
-            const start = new Date()
-            end.setTime(end.getTime() + 3600 * 1000 * 24 * 30)
-            return [start, end]
-        },
-    },
-    {
-        text: '未来三月',
-        value: () => {
-            const end = new Date()
-            const start = new Date()
-            end.setTime(end.getTime() + 3 * 3600 * 1000 * 24 * 30)
-            return [start, end]
-        },
-    },
-]
+//加载结果
 function endloading() {
     step.value = 3
     setTimeout(() => {
         showres.value = true
         setTimeout(() => {
-            //initialize
+            //initialize数据
             tableData.value = []
             for (let i = 0; i < futuredata.value[1].length; i++) {
                 tableData.value.push({
@@ -197,10 +139,9 @@ function endloading() {
                     name: futuredata.value[1][i][2],
                 })
             }
-            console.log(tableData.value)
             myChart = echarts.init(document.getElementById('future'));
             run(futuredata.value)
-            //绑定变化
+            //绑定窗口大小变化
             setTimeout(() => {
                 resizeObserver = useResizeObserver(el_future, (entries) => {
                     myChart.resize()
@@ -209,6 +150,7 @@ function endloading() {
         }, 100)
     }, 1000)
 }
+//TODO:绘制预测图表待更新
 //提交表单
 const onSubmit = () => {
     ElMessageBox.confirm(
@@ -222,6 +164,7 @@ const onSubmit = () => {
     ).then(() => {
         formRef.value.validate((valid) => {
             if (valid) {
+                console.log(form)
                 iconloading.value = true
                 step.value = 2
                 // getfuture(form).then(res => {

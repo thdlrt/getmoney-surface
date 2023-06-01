@@ -328,6 +328,50 @@ data:{
     }
     return data;
 }
+//钱包充值
+export function addmoney(num){
+    // return axios.post("/api/admin/addmoney",{
+    //     num:num
+    // })
+    
+}
+//钱包提现
+export function getmoney(num){
+    // return axios.post("/api/admin/getmoney",{
+    //     num:num
+    // })
 
+}
+//获取持仓股票
+export function ownstock(){
+    //return axios.post("/api/admin/ownstock")
+    return [{
+        name:"股票1",
+        price:100,
+        num:100,
+    },{
+        name:"股票2",
+        price:200,
+        num:200,
+    },{
+        name:"股票3",
+        price:300,
+        num:300,
+    }]
+}
+//买入股票
+export function buyStock(id,value){
+    return axios.post("/api/admin/buyStock",{
+        id:id,
+        value:value
+    })
+}
+//卖出股票
+export function sellStock(id,value){
+    return axios.post("/api/admin/sellStock",{
+        id:id,
+        value:value
+    })
+}
 //头像上传
 export const uploadImage = "/api/admin/image/upload"

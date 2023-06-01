@@ -265,11 +265,11 @@ var option_trend = {
     },
     series: [
         {
-            name: 'scatter',
+            name: '实际状况',
             type: 'scatter'
         },
         {
-            name: 'line',
+            name: '资产预测',
             type: 'line',
             datasetIndex: 1,
             symbolSize: 0.1,

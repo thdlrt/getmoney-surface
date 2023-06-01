@@ -33,9 +33,9 @@
             <template #default="{ row }">
                 <div class="flex justify-center items-center">
                     <el-button link v-if="choiceName.indexOf(row.name) == -1" type="primary" size="small"
-                        @click="onadd(row)">添加</el-button>
+                        @click="onadd(row)" :loading="loading_add">添加</el-button>
                     <el-popconfirm v-else title="确认删除?" confirm-button-text="确认" cancel-button-text="取消"
-                        @confirm="ondel(row)">
+                        @confirm="ondel(row)" :loading="loading_del">
                         <template #reference>
                             <el-button link type="danger" size="small">删除</el-button>
                         </template>
@@ -54,6 +54,8 @@ const input = ref('')
 const tableData = ref([])
 const choiceData = ref([])
 const choiceName = ref([])
+const loading_add = ref(false)
+const loading_del = ref(false)
 const props = defineProps({
     label:{
         type:String,
@@ -89,21 +91,27 @@ const onsearch = () => {
 //添加/删除
 const onadd = (row) => {
     addchoice(row.name)
+    //loading_add.value = true
     // getchoice(row.name).then(res => {
     //         choiceData.value = res.data
     //         upchoice()
     //         if(activeName.value==1)
     //             tableData.value = choiceData.value
+    //     }).finally(() => {
+    //         loading_add.value = false
     //     })
 }
 const ondel = (row) => {
     delchoice(row.name)
     //更新显示
+    //loading_del.value = true
     // getchoice().then(res => {
     //         choiceData.value = res.data
     //          upchoice()
     //         if(activeName.value==1)
     //             tableData.value = choiceData.value
+    //     }).finally(() => {
+    //         loading_del.value = false
     //     })
 }
 //更新选择名单

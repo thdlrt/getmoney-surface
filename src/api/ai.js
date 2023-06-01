@@ -1,31 +1,9 @@
 import axios from "~/axios";
-export function getalogrithm() {
-  //return axios.post("/api/ai/index");
-  return [{
-        value: 'asd',
-        label: 'asd',
-      },
-      {
-        value: 'qwe',
-        label: 'qwe',
-      },
-      {
-        value: 'Option3',
-        label: 'Option3',
-      },
-      {
-        value: 'Option4',
-        label: 'Option4',
-      },
-      {
-        value: 'Option5',
-        label: 'Option5',
-      },];
-}
+//TODO接受预测结果的数据格式
 export function getfuture(data) {
     // return axios.post("/api/ai/getfuture",{
-    //     date:data.date,
-    //     alogrithm:data.alogrithm,
+    //     name:data.name,
+    //     date:data.time,
     // });
     return [[[
         "name",
@@ -88,4 +66,165 @@ export function getfuture(data) {
         "2021-05-07",
         25.7,
     ]]]
-  }
+}
+
+//获取推荐的股票
+export function getrecommend() {
+    // return axios.post("/api/ai/getrecommend");
+    return [{
+        name: '阿里巴巴',
+        price: 100,
+        id: '123',
+        changeprice: 3.1,
+        changerate: 1,
+        detail: [{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        },{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        }]
+    },{
+        name: '阿里巴巴',
+        price: 100,
+        id: '123',
+        changeprice: 3.1,
+        changerate: 1,
+        detail: [{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        },{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        }]
+    },{
+        name: '阿里巴巴',
+        price: 100,
+        id: '123',
+        changeprice: 3.1,
+        changerate: 1,
+        detail: [{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        },{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        }]
+    },{
+        name: '阿里巴巴',
+        price: 100,
+        id: '123',
+        changeprice: 3.1,
+        changerate: 1,
+        detail: [{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        },{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        }]
+    },{
+        name: '阿里巴巴',
+        price: 100,
+        id: '123',
+        changeprice: 3.1,
+        changerate: 1,
+        detail: [{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        },{
+            name: 'asd',
+            value: 123,
+            max:142
+        },{
+            name:'qwe',
+            value: 123,
+            max:234
+        },{
+            name:'zxc',
+            value: 123,
+            max:234
+        }]
+    }]
+}

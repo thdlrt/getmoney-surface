@@ -10,7 +10,8 @@ import News from '~/pages/data/news.vue'
 import Advise from '~/pages/ai/advise.vue'
 import Future from '~/pages/ai/future.vue'
 import Test from '~/pages/ai/test.vue'
-import UserCenter from '~/pages/user/user.vue'
+import UserCenter from '~/pages/user/center.vue'
+import Wallet from '~/pages/user/wallet.vue'
 import Forget from '~/pages/forget.vue'
 const routes = [{
     path:'/',
@@ -46,10 +47,16 @@ const routes = [{
             title:'策略回测'
         }
     },{
-        path:'/user',
+        path:'/user/center',
         component:UserCenter,
         meta :{
             title:'个人中心'
+        }
+    },{
+        path:'/user/wallet',
+        component:Wallet,
+        meta :{
+            title:'钱包管理'
         }
     }]
 },{

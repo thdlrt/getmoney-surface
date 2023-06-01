@@ -97,7 +97,7 @@ export function search(name) {
 }
 //获取用户自选
 export function getchoice() {
-  //return axios.post("/api/stock/getchoice")
+  //return axios.get("/api/stock/getchoice")
   return [
     {
       name: "中国中车",

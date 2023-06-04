@@ -11,10 +11,10 @@ router.beforeEach(async(to, from, next) => {
     document.title = title
     //未登录则返回登录
     const token = auth.getToken()
-    if(!token && to.path !== '/login' && to.path !== '/signup' && to.path !== '/forget'){
-        util.toast('请先登录', 'error')
-        return next('/login')
-    }
+    // if(!token && to.path !== '/login' && to.path !== '/signup' && to.path !== '/forget'){
+    //     util.toast('请先登录', 'error')
+    //     return next('/login')
+    // }
     //如果刚刚登陆则自动存储信息
     if(token){
         //获取信息失败表示非法token，删除token并返回登录

@@ -68,7 +68,7 @@
             </el-form-item>
             <!-- 头像上传 -->
             <span>上传头像</span>
-            <el-upload drag :action="uploadImage" :headers="{ token }" name="img" :on-success="uploadSuccess"
+            <el-upload drag :action="uploadImage" :headers="{ Authorization }" name="img" :on-success="uploadSuccess"
                 :on-error="uploadError" :data="data"
                 accept="image/png, image/jpeg,  image/jpg"
                 >
@@ -208,7 +208,7 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { ref, reactive } from 'vue'
 import FormDrawer from '~/components/FormDrawer.vue'
-const token = auth.getToken()
+const Authorization = 'Bearer '+ auth.getToken()
 const store = useStore()
 const router = useRouter()
 //退出登录
@@ -273,14 +273,14 @@ const onSubmit = () => {
         }
     })
 }
-//个人信息查看/修改
+//个人信息查看/修改&
 const formRef2 = ref(null)
 const formDrawerRef2 = ref(null)
 const form2 = reactive({
     username: store.state.user.username,
-    sex: '',//store.state.user.sex
-    email: '',//store.state.user.email
-    birthday: '',//store.state.user.birthday
+    sex: store.state.user.sex,//store.state.user.sex
+    email: store.state.user.email,//store.state.user.email
+    birthday: store.state.user.birthday,//store.state.user.birthday
     q1: '',
     q2: '',
     q3: '',
@@ -372,7 +372,7 @@ const onSubmit2 = () => {
 }
 //头像上传
 const uploadSuccess = (response, uplloadFile, uploadFiles) => {
-    console.log("success")
+    window.location.reload();
 }
 const uploadError = (error, uplloadFile, uploadFiles) => {
     let msg = JSON.parse(error.message).msg || '上传失败'

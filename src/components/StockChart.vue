@@ -2,7 +2,7 @@
     <div :id="props.id" ref="el_chart" style="height: 100%;width: 100%;" />
 </template>
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useResizeObserver } from '@vueuse/core'
 import * as echarts from 'echarts';
 import { initMOption, initKOption } from './stockchart/k-line.js';
@@ -15,38 +15,30 @@ const props = defineProps({
         type: Number,
         default: 0
     },
-    data: {
-        default: null
-    },
     id: {
         type: String,
         default: null
     }
 })
 //初始化图
-onMounted(() => {
+const reload=(data)=>{
     if (props.type == 0) {
         mChart = echarts.init(document.getElementById(props.id));
-        mChart.setOption(initMOption(props.data, 'hs'));
+        mChart.setOption(initMOption(data, 'hs'));
         useResizeObserver(el_chart, (entries) => {
             mChart.resize()
         })
     }
     else {
         kChart = echarts.init(document.getElementById(props.id));
-        kChart.setOption(initKOption(props.data));
+        console.log(data)
+        kChart.setOption(initKOption(data));
         useResizeObserver(el_chart, (entries) => {
             kChart.resize()
         })
     }
-})
-//监听数据变化
-watch(() => props.data, (newValue) => {
-    if (props.type == 0) {
-        mChart.setOption(initMOption(newValue, 'hs'));
-    }
-    else {
-        kChart.setOption(initKOption(newValue));
-    }
+}
+defineExpose({
+    reload,
 })
 </script>

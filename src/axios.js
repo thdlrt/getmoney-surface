@@ -13,7 +13,7 @@ service.interceptors.request.use(
     // cookie(token)添加到请求头
     const token = auth.getToken();
     if (token) {
-      config.headers["token"] = token;
+      config.headers["Authorization"] = 'Bearer '+token;
     }
     return config;
   },

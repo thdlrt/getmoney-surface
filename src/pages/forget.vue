@@ -31,10 +31,10 @@
                         <el-input v-model="form2.checknum" />
                     </el-form-item>
                     <el-form-item label="密码" prop="password">
-                        <el-input v-model="form2.password" />
+                        <el-input v-model="form2.password" type="password" />
                     </el-form-item>
                     <el-form-item label="确认密码" prop="repassword">
-                        <el-input v-model="form2.repassword" />
+                        <el-input v-model="form2.repassword" type="password" />
                     </el-form-item>
                 </el-form>
                 <div v-if="step === 3" class="flex-container">
@@ -128,23 +128,21 @@ const onright = () => {
     if (step.value == 1) {//修改密码
         formRef2.value.validate((valid) => {
             if (!valid) return
-            forgetpassword(form1.value.username,form1.value.email,form2.value).then(res => {
-                step.value++
+            forgetpassword(form1.value.username, form1.value.email, form2.value).then(res => {
                 left.value = false
                 util.toast("修改密码成功！")
+                //修改成功准备跳转
+                right.value = true
+                left.value = true
+                step.value += 2
+                repeatTimeout(() => {
+                    finfishtime.value--
+                }, 1000, 3);
+                setTimeout(() => {
+                    router.push('/login')
+                }, 3000);
             })
         })
-    }
-    if (step.value == 2) {//修改成功准备跳转
-        right.value = true
-        left.value = true
-        step.value++
-        repeatTimeout(() => {
-            finfishtime.value--
-        }, 1000, 3);
-        setTimeout(() => {
-            router.push('/login')
-        }, 3000);
     }
 }
 function repeatTimeout(callback, delay, times) {

@@ -4,11 +4,30 @@
         <el-descriptions :border="true">
             <el-descriptions-item label="股票名称：">{{ dialogInfo.name }}</el-descriptions-item>
             <el-descriptions-item label="股票价格：">{{ dialogInfo.price }}</el-descriptions-item>
-            <el-descriptions-item label="交易总额：">{{ dialogInfo.price * tradenum }}</el-descriptions-item>
+            <el-descriptions-item>
+                <template #label>
+                    <div class="flex justify-between items-center">
+                        <span>交易总额：</span>
+                        <el-tooltip class="box-item" effect="light" content="每笔包含千分之四的手续费" placement="bottom-start">
+                            <el-icon class="mr-3">
+                                <InfoFilled />
+                            </el-icon>
+                        </el-tooltip>
+                    </div>
+                </template>
+                <span v-if="!type">
+                    {{ Math.floor(dialogInfo.price * tradenum * 1.004) }}
+                    ({{ dialogInfo.price * tradenum }}+{{ Math.floor(dialogInfo.price * tradenum * 0.004) }})
+                </span>
+                <span v-else>
+                    {{ Math.floor(dialogInfo.price * tradenum * 0.996) }}
+                    ({{ dialogInfo.price * tradenum }}-{{ Math.floor(dialogInfo.price * tradenum * 0.004) }})
+                </span>
+            </el-descriptions-item>
         </el-descriptions>
         <div class="mt-5 text-md ml-5">
             <div>
-                <span>{{ dialogInfo.title }}股票数目:</span>
+                <span>{{ type_str }}股票数目:</span>
                 <el-input-number v-model="tradenum" :min="100" :max="10000" :step="100" size="middle"
                     controls-position="right" class="ml-8 w-50" />
             </div>
@@ -26,7 +45,7 @@
                 <el-popconfirm title="确定要进行交易?" confirm-button-text="确认" cancel-button-text="取消" @confirm="confirmEvent">
                     <template #reference>
                         <el-button type="primary">
-                            买入
+                            {{ type_str }}
                         </el-button>
                     </template>
                 </el-popconfirm>
@@ -36,7 +55,7 @@
 </template>  
 <script setup>
 import { ref } from 'vue'
-import { buyStock, sellStock } from '~/api/user.js'
+import { trade } from '~/api/user.js'
 import * as util from '~/composables/util'
 import CheckNum from './CheckNum.vue';
 const dialogFormVisible = ref(false)
@@ -44,6 +63,8 @@ const dialogInfo = ref(null)
 const tradenum = ref(100)
 const checknum = ref(null)
 const checkinput = ref('')
+const type = ref(false)//买卖
+const type_str = ref('')
 const props = defineProps({
     name: {
         type: String,
@@ -57,6 +78,7 @@ const props = defineProps({
         type: String,
         default: ''
     }
+    
 })
 dialogInfo.value = {
     name: props.name,
@@ -67,36 +89,47 @@ dialogInfo.value = {
 const buy = () => {
     dialogInfo.value = props
     dialogFormVisible.value = true
-    dialogInfo.title = "买入"
+    type.value = false
+    type_str.value = '买入'
 
 }
 const sell = () => {
     dialogInfo.value = props
     dialogFormVisible.value = true
-    dialogInfo.title = "卖出"
+    type.value = true
+    type_str.value = '卖出'
 }
 //确认交易
 const confirmEvent = () => {
     //检查验证码
-    if(!checknum.value.checkinput(checkinput.value)){
+    if (!checknum.value.checkinput(checkinput.value)) {
         checknum.value.reload()
-        util.toast('验证码错误!','error')
+        util.toast('验证码错误!', 'error')
         checkinput.value = ''
         return
     }
-    if (dialogInfo.value.title == "买入") {
-        buyStock(dialogInfo.value.id, tradenum.value).then(res => {
+    if (!type.value) {
+        trade(dialogInfo.value.price, Math.floor(dialogInfo.value.price * tradenum.value * 1.004), dialogInfo.value.name, dialogInfo.value.id, tradenum.value).then(res => {
             dialogFormVisible.value = false
             util.toast('交易成功!')
+            emit('update')
+            checknum.value.reload()
+            tradenum.value = 100
+            checkinput.value = ''
         })
     }
     else {
-        sellStock(dialogInfo.value.id, tradenum.value).then(res => {
+        trade(dialogInfo.value.price, Math.floor(dialogInfo.value.price * tradenum.value * 0.996), dialogInfo.value.name, dialogInfo.value.id, -tradenum.value).then(res => {
             dialogFormVisible.value = false
             util.toast('交易成功!')
+            emit('update')
+            checknum.value.reload()
+            tradenum.value = 100
+            checkinput.value = ''
         })
     }
 }
+const emit = defineEmits(['update'])
 defineExpose({
     buy,
     sell,

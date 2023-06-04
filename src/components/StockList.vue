@@ -21,9 +21,9 @@
         </el-tab-pane>
     </el-tabs>
     <!-- 表格 -->
-    <el-table :data="tableData" stripe style="width: 100%;height:100%">
+    <el-table :data="tableData" stripe style="width: 100%;height:92%" v-loading="loading">
         <el-table-column fixed prop="name" label="名称" sortable />
-        <el-table-column prop="price" label="价格" sortable />
+        <el-table-column prop="value" label="价格" sortable />
         <el-table-column prop="rate" label="涨跌" sortable>
             <template #default="{ row }">
                 <span :style="{ color: row.rate > 0 ? 'red' : 'green' }">{{ row.rate }}%</span>
@@ -33,9 +33,9 @@
             <template #default="{ row }">
                 <div class="flex justify-center items-center">
                     <el-button link v-if="choiceName.indexOf(row.name) == -1" type="primary" size="small"
-                        @click="onadd(row)" :loading="loading_add">添加</el-button>
+                        @click="onadd(row)">添加</el-button>
                     <el-popconfirm v-else title="确认删除?" confirm-button-text="确认" cancel-button-text="取消"
-                        @confirm="ondel(row)" :loading="loading_del">
+                        @confirm="ondel(row)">
                         <template #reference>
                             <el-button link type="danger" size="small">删除</el-button>
                         </template>
@@ -49,31 +49,37 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { gethot, search, getchoice, addchoice, delchoice } from '~/api/data.js'
+import * as util from '~/composables/util'
 const activeName = ref(0)
 const input = ref('')
 const tableData = ref([])
 const choiceData = ref([])
 const choiceName = ref([])
-const loading_add = ref(false)
-const loading_del = ref(false)
+const loading = ref(false)
 const props = defineProps({
-    label:{
-        type:String,
-        default:''
+    label: {
+        type: String,
+        default: ''
     }
 })
-const emit =defineEmits(['detail'])
+const emit = defineEmits(['detail'])
 //发出被选中的信息
 const ondetail = (row) => {
-    emit('detail',row)
+    //emit('detail', row, '111')
+    loading.value = true
+    search(row.name).then((res) => {
+        emit('detail', row, res.data[0].code)
+    }).finally(() => {
+        loading.value = false
+    })
 }
 //更新表格（选择发生了变化）
 watch(() => activeName.value, (newValue) => {
+    loading.value = true
     if (newValue == 0) {
-        // gethot().then(res => {
-        //     tableData.value = res.data
-        // })
-        tableData.value = gethot()
+        gethot().then(res => {
+            tableData.value = res.data
+        })
     }
     else if (newValue == 1) {
         tableData.value = choiceData.value
@@ -81,53 +87,64 @@ watch(() => activeName.value, (newValue) => {
     else if (newValue == 2) {
         tableData.value = []
     }
+    loading.value = false
 })
 //搜索
 const onsearch = () => {
-    // search(input.value).then(res => {
-    //     tableData.value = res.data
-    // })
+    loading.value = true
+    search(input.value).then(res => {
+        tableData.value = res.data
+    }).finally(() => {
+        loading.value = false
+    })
 }
 //添加/删除
 const onadd = (row) => {
-    addchoice(row.name)
-    //loading_add.value = true
-    // getchoice(row.name).then(res => {
-    //         choiceData.value = res.data
-    //         upchoice()
-    //         if(activeName.value==1)
-    //             tableData.value = choiceData.value
-    //     }).finally(() => {
-    //         loading_add.value = false
-    //     })
+    loading.value = true
+    search(row.name).then((res0) => {
+        addchoice(row.name, res0.data[0].code).then(res => {
+            upchoice()
+            if (activeName.value == 1)
+                tableData.value = choiceData.value
+        }).finally(() => {
+            loading.value = false
+        })
+    })
 }
 const ondel = (row) => {
-    delchoice(row.name)
-    //更新显示
-    //loading_del.value = true
-    // getchoice().then(res => {
-    //         choiceData.value = res.data
-    //          upchoice()
-    //         if(activeName.value==1)
-    //             tableData.value = choiceData.value
-    //     }).finally(() => {
-    //         loading_del.value = false
-    //     })
+    loading.value = true
+    search(row.name).then((res) => {
+        delchoice(row.name, res.data[0].code).then(res => {
+            upchoice()
+            if (activeName.value == 1)
+                tableData.value = choiceData.value
+        }).finally(() => {
+            loading.value = false
+        })
+    })
 }
 //更新选择名单
 const upchoice = () => {
-    choiceName.value = []
-    for (let a of choiceData.value)
-        choiceName.value.push(a.name)
+    getchoice().then(res => {
+        choiceData.value = res.options
+        choiceName.value = []
+        //获取当前状态
+        for (let a of choiceData.value) {
+            choiceName.value.push(a.name)
+            if (!a.hasOwnProperty('value')) {
+                search(a.name).then((res) => {
+                    a.value = res.data[0].value
+                    a.rate = res.data[0].rate
+                })
+            }
+        }
+        if (activeName.value == 1)
+            tableData.value = choiceData.value
+    })
 }
 //初始化
-// gethot().then(res => {
-//     tableData.value = res.data
-// })
-tableData.value = gethot()
-// getchoice().then(res => {
-//     console.log(res.data)
-// })
-choiceData.value = getchoice()
+gethot().then(res => {
+    tableData.value = res.data
+})
 upchoice()
 </script>

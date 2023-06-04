@@ -23,7 +23,7 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :lg="9" :md="10" :sm="16" :offset="0">
-                                <el-form-item prop="time" :span="24" style="width: 100%" >
+                                <el-form-item prop="time" :span="24" style="width: 100%">
                                     <el-select v-model="form.time" placeholder="请选择预测区间">
                                         <el-option v-for="item in options" :key="item.value" :label="item.label"
                                             :value="item.value" />
@@ -63,7 +63,7 @@
                     <div class="mt-3 ml-1 mr-2" style="width: 100%;height:100%;">
                         <el-table :data="tableData" stripe style="width: 100%;height:100%;">
                             <el-table-column prop="date" label="日期" />
-                            <el-table-column prop="name" label="价格" />
+                            <el-table-column prop="price" label="预期收益率" />
                         </el-table>
                     </div>
                 </el-col>
@@ -93,14 +93,11 @@ const showres = ref(false)
 const el_future = ref(null)
 const tableData = ref([])
 const options = ref([{
-    value:3,
-    label:'未来3个月'
-},{
-    value:6,
-    label:'未来6个月'
-},{
-    value:12,
-    label:'未来12个月'
+    value: 3,
+    label: '未来3个月'
+}, {
+    value: 6,
+    label: '未来6个月'
 }])
 const format = (percentage) => (percentage === 100 ? '' : `${percentage}%`)
 var myChart
@@ -131,16 +128,101 @@ function endloading() {
     setTimeout(() => {
         showres.value = true
         setTimeout(() => {
-            //initialize数据
+            //获取当前年月份
+            var date = new Date()
+            var year = date.getFullYear()
+            var month = date.getMonth() + 1
+            var xlist = []
+            for (let i = 0; i < form.time; i++) {
+                xlist.push(year + '-' + month)
+                month++
+                if (month > 12) {
+                    month = 1
+                    year++
+                }
+            }
+            //装载表格
             tableData.value = []
-            for (let i = 0; i < futuredata.value[1].length; i++) {
+            for (let i = 0; i < futuredata.value.length; i++) {
                 tableData.value.push({
-                    date: futuredata.value[1][i][1],
-                    name: futuredata.value[1][i][2],
+                    date: xlist[i],
+                    price: futuredata.value[i]
                 })
             }
+            //预测图
+            var option = {
+                color: ['#00DDFF'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                legend: {
+                    data: [form.name + ' 预期收益'],
+                    textStyle: {
+                        fontSize: 20 // 设置字体大小
+                    },
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: xlist
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value}%' // 在刻度值后面加上百分号
+                        },
+                    }
+                ],
+                series: [{
+                    name: form.name + ' 预期收益',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0
+                    },
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(0, 221, 255)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(77, 119, 255)'
+                            }
+                        ])
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: futuredata.value
+                }]
+            };
             myChart = echarts.init(document.getElementById('future'));
-            run(futuredata.value)
+            myChart.setOption(option);
             //绑定窗口大小变化
             setTimeout(() => {
                 resizeObserver = useResizeObserver(el_future, (entries) => {
@@ -197,7 +279,6 @@ const onExit = () => {
     ).then(() => {
         step.value = 0
         showres.value = false
-        form.alogrithm = ''
         form.date = ''
         form.name = ''
         resizeObserver.disconnect()
@@ -205,7 +286,6 @@ const onExit = () => {
 }
 //伸缩
 const onleft = () => {
-    console.log(form.alogrithm)
     if (icon.value === 'ArrowLeft') {
         icon.value = 'ArrowRight'
         smoothTransition(8, 0, 0.2, leftlen)
@@ -231,88 +311,6 @@ const smoothTransition = (start, end, duration, target) => {
             clearInterval(transitionTimer)
         }
     }, interval)
-}
-//future预测图
-function run(data) {
-    let temp = []
-    for (let a of data) {
-        temp = temp.concat(a)
-    }
-    data = temp
-    const alog = [
-        'asd',
-        'qwe',
-    ];//=form.alogrithm
-    const datasetWithFilters = [];
-    const seriesList = [];
-    echarts.util.each(alog, function (country) {
-        var datasetId = 'dataset_' + country;
-        //自动生成过滤器
-        datasetWithFilters.push({
-            id: datasetId,
-            fromDatasetId: 'dataset_raw',
-            transform: {
-                type: 'filter',
-                config: {
-                    and: [
-                        //第二个条件是筛选 'Country' 维度等于当前循环的国家名称。
-                        { dimension: 'name', '=': country }
-                    ]
-                }
-            }
-        })
-        seriesList.push({
-            type: 'line',
-            datasetId: datasetId,
-            showSymbol: false,
-            name: country,
-            endLabel: {
-                show: true,
-                formatter: function (params) {
-                    return params.value[0];
-                }
-            },
-            labelLayout: {
-                moveOverlap: 'shiftY'
-            },
-            emphasis: {
-                focus: 'series'
-            },
-            encode: {
-                x: 'date',
-                y: 'price',
-                label: ['name', 'price'],
-                itemName: '日期',
-                tooltip: ['price']
-            }
-        });
-    });
-    let option = {
-        animationDuration: 5000,
-        dataset: [
-            {
-                id: 'dataset_raw',
-                source: data
-            },
-            ...datasetWithFilters//将过滤器对象展开
-        ],
-        tooltip: {
-            order: 'valueDesc',
-            trigger: 'axis'
-        },
-        xAxis: {
-            type: 'category',
-            nameLocation: 'middle',
-        },
-        yAxis: {
-            name: '价格(元)'
-        },
-        grid: {
-            right: 140
-        },
-        series: seriesList
-    };
-    myChart.setOption(option);
 }
 </script>
 <style></style>

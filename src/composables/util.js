@@ -1,4 +1,5 @@
 import { ElNotification, ElMessageBox } from 'element-plus'
+import { search } from '~/api/data.js'
 import nprogress from 'nprogress'
 //成功提示
 export function toast(message, type = 'success') {

@@ -15,15 +15,10 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://ceshi13.dishait.cn",
-        //target: "http://test",
+        //target: "http://172.24.12.121:5000",
+        target: "http://172.24.101.12:5000",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-      "/news": {
-        target: "http://v.juhe.cn/toutiao",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/news/, ""),
       },
     },
   },

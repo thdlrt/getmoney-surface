@@ -74,7 +74,7 @@ export function updateinfo(data) {
 }
 
 export function gettradeinfo() {
-    //return axios.post("/api/api/user/gettradeinfo")
+    return axios.post("/api/api/user/gettradeinfo")
     /*
 data:{
     week:[{
@@ -108,236 +108,236 @@ data:{
     }...]//资产分布
 }
     */
-    let data = {
-        week: [{
-            income: -0.3,
-            date: "2021-01-01",
-            detail: [{
-                name: "股票1",
-                income: -0.4
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-        }, {
-            income: 0.2,
-            date: "2021-01-02",
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-        }, {
-            income: 0.1,
-            date: "2021-01-03",
-            detail: [{
-                name: "股票1",
-                income: -0.5
-            }, {
-                name: "股票2",
-                income: 0.6
-            }],
-        }, {
-            income: 0.4,
-            date: "2021-01-04",
-            detail: [{
-                name: "股票1",
-                income: 0.2
-            }, {
-                name: "股票2",
-                income: 0.2
-            }],
-        }, {
-            income: 0.3,
-            date: "2021-01-05",
-            detail: [{
-                name: "股票1",
-                income: 0.2
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-        }, {
-            income: 0.6,
-            date: "2021-01-06",
-            detail: [{
-                name: "股票1",
-                income: 0.5
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-        }, {
-            income: -0.1,
-            date: "2021-01-07",
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: -0.2
-            }],
-        }],
-        acincome: 12,
-        rate: 0.3,
-        acrate: 0.4,
-        transactions: [{
-            begin: "2021-01-01",
-            end: "2021-01-02",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }, {
-            begin: "2021-01-02",
-            end: "2021-01-03",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }, {
-            begin: "2021-01-03",
-            end: "2021-01-04",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }, {
-            begin: "2021-01-03",
-            end: "2021-01-04",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }, {
-            begin: "2021-01-03",
-            end: "2021-01-04",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }, {
-            begin: "2021-01-03",
-            end: "2021-01-04",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }, {
-            begin: "2021-01-03",
-            end: "2021-01-04",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }, {
-            begin: "2021-01-03",
-            end: "2021-01-04",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: -0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: -0.2
-        }, {
-            begin: "2021-01-03",
-            end: "2021-01-04",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }, {
-            begin: "2021-01-03",
-            end: "2021-01-04",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }, {
-            begin: "2021-01-03",
-            end: "2021-01-04",
-            value: 100,
-            detail: [{
-                name: "股票1",
-                income: 0.1
-            }, {
-                name: "股票2",
-                income: 0.1
-            }],
-            income: 0.2
-        }],
-        trend: [{
-            date: "2021-01-01",
-            value: 100
-        }, {
-            date: "2021-01-02",
-            value: 200
-        }, {
-            date: "2021-01-03",
-            value: 180
-        }, {
-            date: "2021-01-04",
-            value: 300
-        }],
-        asset: [{
-            name: "股票1",
-            value: 100
-        }, {
-            name: "股票2",
-            value: 200
-        }]
-    }
-    return data;
+    // let data = {
+    //     week: [{
+    //         income: -0.3,
+    //         date: "2021-01-01",
+    //         detail: [{
+    //             name: "股票1",
+    //             income: -0.4
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //     }, {
+    //         income: 0.2,
+    //         date: "2021-01-02",
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //     }, {
+    //         income: 0.1,
+    //         date: "2021-01-03",
+    //         detail: [{
+    //             name: "股票1",
+    //             income: -0.5
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.6
+    //         }],
+    //     }, {
+    //         income: 0.4,
+    //         date: "2021-01-04",
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.2
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.2
+    //         }],
+    //     }, {
+    //         income: 0.3,
+    //         date: "2021-01-05",
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.2
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //     }, {
+    //         income: 0.6,
+    //         date: "2021-01-06",
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.5
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //     }, {
+    //         income: -0.1,
+    //         date: "2021-01-07",
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: -0.2
+    //         }],
+    //     }],
+    //     acincome: 12,
+    //     rate: 0.3,
+    //     acrate: 0.4,
+    //     transactions: [{
+    //         begin: "2021-01-01",
+    //         end: "2021-01-02",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }, {
+    //         begin: "2021-01-02",
+    //         end: "2021-01-03",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }, {
+    //         begin: "2021-01-03",
+    //         end: "2021-01-04",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }, {
+    //         begin: "2021-01-03",
+    //         end: "2021-01-04",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }, {
+    //         begin: "2021-01-03",
+    //         end: "2021-01-04",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }, {
+    //         begin: "2021-01-03",
+    //         end: "2021-01-04",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }, {
+    //         begin: "2021-01-03",
+    //         end: "2021-01-04",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }, {
+    //         begin: "2021-01-03",
+    //         end: "2021-01-04",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: -0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: -0.2
+    //     }, {
+    //         begin: "2021-01-03",
+    //         end: "2021-01-04",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }, {
+    //         begin: "2021-01-03",
+    //         end: "2021-01-04",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }, {
+    //         begin: "2021-01-03",
+    //         end: "2021-01-04",
+    //         value: 100,
+    //         detail: [{
+    //             name: "股票1",
+    //             income: 0.1
+    //         }, {
+    //             name: "股票2",
+    //             income: 0.1
+    //         }],
+    //         income: 0.2
+    //     }],
+    //     trend: [{
+    //         date: "2021-01-01",
+    //         value: 100
+    //     }, {
+    //         date: "2021-01-02",
+    //         value: 200
+    //     }, {
+    //         date: "2021-01-03",
+    //         value: 180
+    //     }, {
+    //         date: "2021-01-04",
+    //         value: 300
+    //     }],
+    //     asset: [{
+    //         name: "股票1",
+    //         value: 100
+    //     }, {
+    //         name: "股票2",
+    //         value: 200
+    //     }]
+    // }
+    // return data;
 }
 //钱包充值
 export function addmoney(num) {

@@ -78,7 +78,7 @@ const props = defineProps({
         type: String,
         default: ''
     }
-    
+
 })
 dialogInfo.value = {
     name: props.name,
@@ -113,6 +113,7 @@ const confirmEvent = () => {
             dialogFormVisible.value = false
             util.toast('交易成功!')
             emit('update')
+        }).finally(() => {
             checknum.value.reload()
             tradenum.value = 100
             checkinput.value = ''
@@ -123,6 +124,7 @@ const confirmEvent = () => {
             dialogFormVisible.value = false
             util.toast('交易成功!')
             emit('update')
+        }).finally(() => {
             checknum.value.reload()
             tradenum.value = 100
             checkinput.value = ''

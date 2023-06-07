@@ -1,9 +1,5 @@
 <template>
-    <div class="flex bg-blue-300 text-blue-600 font-bold text-xl h-[60px] fixed top-0 left-0 right-0 items-center z-index" style="z-index:1000;">
-        <!-- logo -->
-        <span style="display: flex;" class="w-[180px] flex justify-end items-center">
-            <img src="../../assets/logo.png" alt="Logo" class="h-12 w-39 cursor-pointer" @click="onback">
-        </span>
+    <div class="flex text-gray-200 font-bold text-xl h-[55px] mt-[5px] items-center z-index rounded-md" style="z-index:1000;background-color: #4687ff;">
         <!-- 折叠 -->
         <el-tooltip effect="dark" content="折叠" placement="bottom">
             <el-icon class="ion-btn" @click="$store.commit('handleAsideWidth')">
@@ -14,7 +10,7 @@
         <!-- 用户信息/下拉菜单等 -->
         <div class="ml-auto flex items-center">
             <el-avatar :size="35" :src="$store.state.user.avatar" />
-            <el-dropdown class="dropdown" @command="handleCommand">
+            <el-dropdown class="dropdown" @command="handleCommand" style="color:white">
                 <span class="el-dropdown-link">
                     {{ $store.state.user.username }}
                     <el-icon class="el-icon--right">
@@ -280,7 +276,7 @@ const form2 = reactive({
     username: store.state.user.username,
     sex: store.state.user.sex,//store.state.user.sex
     email: store.state.user.email,//store.state.user.email
-    birthday: store.state.user.birthday,//store.state.user.birthday
+    birthday: null,//store.state.user.birthday
     q1: '',
     q2: '',
     q3: '',
@@ -388,10 +384,6 @@ const showquestion = () => {
     rules2.value = rules2_2;
     formRef2.value.$forceUpdate();
 }
-//返回
-const onback = () => {
-    router.push('/login')
-}
 </script>
 <style>
 /* 按钮样式 */
@@ -402,7 +394,7 @@ const onback = () => {
 }
 
 .ion-btn:hover {
-    @apply bg-blue-200;
+    @apply bg-blue-400;
 }
 
 /* 下拉菜单 */

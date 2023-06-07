@@ -33,7 +33,6 @@
           </el-row>
         </el-form>
         <el-divider />
-        <el-alert v-if="show" title="注意" type="warning" description="请先选择回测本金及测试区间" show-icon />
         <div id="chart" ref="el_chart" style="width:100%;height:80%" />
       </el-col>
     </el-row>
@@ -47,7 +46,6 @@ import { testStock } from '~/api/ai.js'
 const formRef = ref(null)
 const loading = ref(false)
 const loadingchart = ref(false)
-const show = ref(true)
 const el_chart = ref(null)
 var myChart
 const getstock = (data, code) => {
@@ -56,13 +54,11 @@ const getstock = (data, code) => {
 }
 const onSubmit = () => {
   showresult()
-  show.value = false
   formRef.value.validate((valid) => {
     if (valid) {
       //防止重复点击
       loading.value = true
       //testStock()
-      show.value = false
       showresult()
     } else {
       return false

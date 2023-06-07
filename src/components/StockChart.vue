@@ -2,7 +2,7 @@
     <div :id="props.id" ref="el_chart" style="height: 100%;width: 100%;" />
 </template>
 <script setup>
-import { ref, toRefs } from 'vue'
+import { ref } from 'vue'
 import { useResizeObserver } from '@vueuse/core'
 import * as echarts from 'echarts';
 import { initMOption, initKOption } from './stockchart/k-line.js';
@@ -21,21 +21,26 @@ const props = defineProps({
     }
 })
 //初始化图
-const reload=(data)=>{
+const reload = (data) => {
+    if(!data)return
     if (props.type == 0) {
-        mChart = echarts.init(document.getElementById(props.id));
+        if (!mChart) {
+            mChart = echarts.init(document.getElementById(props.id));
+            useResizeObserver(el_chart, (entries) => {
+                mChart.resize()
+            })
+        }
+        console.log(data)
         mChart.setOption(initMOption(data, 'hs'));
-        useResizeObserver(el_chart, (entries) => {
-            mChart.resize()
-        })
     }
     else {
-        kChart = echarts.init(document.getElementById(props.id));
-        console.log(data)
+        if (!kChart) {
+            kChart = echarts.init(document.getElementById(props.id));
+            useResizeObserver(el_chart, (entries) => {
+                kChart.resize()
+            })
+        }
         kChart.setOption(initKOption(data));
-        useResizeObserver(el_chart, (entries) => {
-            kChart.resize()
-        })
     }
 }
 defineExpose({

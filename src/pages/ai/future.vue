@@ -76,9 +76,10 @@
     </el-card>
 </template>
 <script setup>
-import { ref, watch, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import StockList from '~/components/StockList.vue'
 import { getfuture } from '~/api/ai.js'
+import { search } from '~/api/data.js'
 import { ElMessageBox } from 'element-plus'
 import * as echarts from 'echarts';
 import { useResizeObserver } from '@vueuse/core'
@@ -103,8 +104,9 @@ const format = (percentage) => (percentage === 100 ? '' : `${percentage}%`)
 var myChart
 var resizeObserver
 //选中股票
-const ondetail = (row) => {
+const ondetail = (row, code) => {
     form.name = row.name
+    form.code = code
     if (step.value == 0)
         step.value = 1
 }
@@ -112,6 +114,7 @@ const ondetail = (row) => {
 const form = reactive({
     name: '',
     time: '',
+    code: '',
 })
 // 表单验证
 const rules = {
@@ -246,20 +249,17 @@ const onSubmit = () => {
     ).then(() => {
         formRef.value.validate((valid) => {
             if (valid) {
-                console.log(form)
                 iconloading.value = true
                 step.value = 2
-                // getfuture(form).then(res => {
-                //     futuredata.value = res.data
-                //     //结束动画
-                //     endloading()
-                // }).finally(() => {
-                //     iconloading.value = false
-                // })
-                futuredata.value = []
-                futuredata.value = getfuture(form)
-                iconloading.value = false
-                endloading()
+                getfuture(form).then(res => {
+                    futuredata.value = res.data
+                    //结束动画
+                    endloading()
+                }).then(() => {
+                    endloading()
+                }).finally(() => {
+                    iconloading.value = false
+                })
             }
             else
                 return false

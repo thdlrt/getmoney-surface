@@ -58,7 +58,7 @@
                 <el-tabs type="border-card" v-model="activeChart" class="mt-8" style="width:100%;height:100%"
                     :loading="loadingchart">
                     <el-tab-pane label="分时" name="0" class="chartbox">
-                        <stock-chart ref="charth" :data="stockDatah" :type="0" :id="'chart1'" />
+                        <stock-chart ref="charth" :type="0" :id="'chart1'" />
                     </el-tab-pane>
                     <el-tab-pane v-for="(item, index) in chartk" :name="item.name" :label="item.label" class="chartbox"
                         :key="index">
@@ -70,7 +70,7 @@
     </el-card>
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { getstock, getstockh, getstockk } from '~/api/data.js'
 import { UpTwo, DownTwo } from '@icon-park/vue-next';
 import StockChart from '~/components/StockChart.vue'
@@ -143,23 +143,21 @@ function geth() {
         //开始追踪h更新
         if (stockName == '浦发银行') {
             getstockh(stockName, stockCode).then(res => {
-                stockDatah.value = res
+                stockDatah.value = []
+                let temp = res.data
+                temp.sort()
+                for (let a of temp) {
+                    a[0] = a[0].substring(8, 12)
+                    if (stockDatah.value.length == 0 || stockDatah.value[stockDatah.value.length - 1][0] != a[0])
+                        stockDatah.value.push(a)
+                }
             })
-            // stockDatah.value = {
-            //     "data": [
-            //         //时间   当前价  均价   交易量
-            //         ["0930", 33.02, 33.02, 8200],
-            //         ["0931", 33.08, 33.05, 54200],
-            //         ["0932", 33.15, 33.083, 25700],
-            //         ["0933", 33.17, 33.105, 20300],
-            //         ["0934", 33.2, 33.124, 20500],
-            //     ],
-            //     "yestclose": 33.01, //前一天收盘价格
-            // }
+            //更新分时
+            if(charth.value!=null){
+                charth.value.reload({data:stockDatah.value,yestclose:stockData.value.close})
+            }
         }
         //stockDatah.value = getstockh(stockName, stockCode)
-        //更新分时
-        charth.value.reload(stockDatah.value)
         //更新时间
         updatetime()
         //更新股票info
@@ -199,9 +197,12 @@ const ondetail = (row, code) => {
     getk(12, stockCode, "d")
 }
 //初始化
-//setInterval(geth, 5000)
-geth()
-getk(12, stockCode, "d")
+onMounted(() => {
+    setInterval(geth, 5000)
+    geth()
+    getk(12, stockCode, "d")
+})
+
 //股票图切换
 watch(() => activeChart.value, (newValue) => {
     loadingchart.value = true

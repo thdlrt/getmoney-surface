@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center items-center full-screen-bg relative">
-        <div class="flex bg-blue-300 font-bold text-xl h-[60px] fixed top-0 left-0 right-0 items-center z-index"
+        <div class="flex bg-blue-100 font-bold text-xl h-[66px] fixed top-[4px] left-2 right-2 items-center z-index rounded-md"
             style="z-index:1000;">
             <!-- logo -->
             <span style="display: flex;" class="w-[180px] flex justify-end items-center">

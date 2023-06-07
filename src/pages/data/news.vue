@@ -10,8 +10,9 @@
                         <el-row :gutter="4">
                             <!-- 图片 -->
                             <el-col :lg="8" :offset="0">
-                                <el-image style="width: 100%; height: 100%" :src="item.detail.thumbnail_pic_s"
-                                    fit="contain" />
+                                <el-image v-if="item.detail.thumbnail_pic_s" style="width: 100%; height: 100%"
+                                    :src="item.detail.thumbnail_pic_s" fit="contain" />
+                                <img v-else src="../../assets/chat.jpg" />
                             </el-col>
                             <!-- 新闻概述 -->
                             <el-col :lg="16" :offset="0">
@@ -44,7 +45,8 @@
                     <div>{{ content.detail.date }}</div>
                 </div>
                 <div class="flex justify-center mt-3" style="width:100%">
-                    <el-image :src="content.detail.thumbnail_pic_s" fit="contain" style="width:70%" />
+                    <el-image v-if="content.detail.thumbnail_pic_s" :src="content.detail.thumbnail_pic_s" fit="contain"
+                        style="width:70%" />
                 </div>
                 <div v-html="content.content" class="h-10 mt-5 text-xl" />
             </el-col>
@@ -68,7 +70,7 @@ const load = () => {
         //初始化详细信息
         if (content.value == null)
             showcontent(0)
-        if(res.data.length == 0)
+        if (res.data.length == 0)
             stop.value = true
         else
             stop.value = false

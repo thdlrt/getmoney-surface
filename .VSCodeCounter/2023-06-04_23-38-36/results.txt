@@ -1,0 +1,90 @@
+Date : 2023-06-04 23:38:36
+Directory : c:\Users\MSI\OneDrive\study\code\vscode\getmoney
+Total : 42 files,  6375 codes, 1162 comments, 118 blanks, all 7655 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Vue        |         24 |      3,549 |         67 |         37 |      3,653 |
+| JSON       |          2 |      1,706 |          0 |          2 |      1,708 |
+| JavaScript |         13 |      1,101 |      1,095 |         74 |      2,270 |
+| HTML       |          1 |         14 |          0 |          1 |         15 |
+| Markdown   |          1 |          4 |          0 |          4 |          8 |
+| XML        |          1 |          1 |          0 |          0 |          1 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                 | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                    |         42 |      6,375 |      1,162 |        118 |      7,655 |
+| . (Files)                                                                            |          6 |      1,745 |          4 |         10 |      1,759 |
+| public                                                                               |          1 |          1 |          0 |          0 |          1 |
+| src                                                                                  |         35 |      4,629 |      1,158 |        108 |      5,895 |
+| src (Files)                                                                          |          4 |         87 |         22 |         14 |        123 |
+| src\api                                                                              |          3 |        155 |        996 |          9 |      1,160 |
+| src\components                                                                       |         10 |      1,339 |         66 |         53 |      1,458 |
+| src\components (Files)                                                               |          9 |        648 |          6 |          4 |        658 |
+| src\components\stockchart                                                            |          1 |        691 |         60 |         49 |        800 |
+| src\composables                                                                      |          2 |         39 |          7 |          1 |         47 |
+| src\layouts                                                                          |          3 |        546 |         12 |          9 |        567 |
+| src\layouts (Files)                                                                  |          1 |         52 |          3 |          6 |         61 |
+| src\layouts\components                                                               |          2 |        494 |          9 |          3 |        506 |
+| src\pages                                                                            |         11 |      2,341 |         49 |         20 |      2,410 |
+| src\pages (Files)                                                                    |          4 |        643 |         11 |         13 |        667 |
+| src\pages\ai                                                                         |          3 |        594 |         10 |          3 |        607 |
+| src\pages\data                                                                       |          2 |        313 |         10 |          2 |        325 |
+| src\pages\user                                                                       |          2 |        791 |         18 |          2 |        811 |
+| src\router                                                                           |          1 |         86 |          0 |          2 |         88 |
+| src\store                                                                            |          1 |         36 |          6 |          0 |         42 |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                             | language   | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\README.md                           | Markdown   |          4 |          0 |          4 |          8 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\index.html                          | HTML       |         14 |          0 |          1 |         15 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\package-lock.json                   | JSON       |      1,671 |          0 |          1 |      1,672 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\package.json                        | JSON       |         35 |          0 |          1 |         36 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\public\vite.svg                     | XML        |          1 |          0 |          0 |          1 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\App.vue                         | Vue        |         14 |          0 |          4 |         18 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\api\ai.js                       | JavaScript |         13 |        157 |          2 |        172 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\api\data.js                     | JavaScript |         48 |        562 |          1 |        611 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\api\user.js                     | JavaScript |         94 |        277 |          6 |        377 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\axios.js                        | JavaScript |         35 |         10 |          4 |         49 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\CheckNum.vue         | Vue        |         34 |          0 |          0 |         34 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\CountTo.vue          | Vue        |         24 |          0 |          1 |         25 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\FormDrawer.vue       | Vue        |         97 |          2 |          0 |         99 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\HistoryForm.vue      | Vue        |         36 |          0 |          0 |         36 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\StockChart.vue       | Vue        |         44 |          0 |          1 |         45 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\StockList.vue        | Vue        |        148 |          2 |          0 |        150 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\TrendIcon.vue        | Vue        |         22 |          0 |          0 |         22 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\adviseStock.vue      | Vue        |        103 |          1 |          0 |        104 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\stockchart\k-line.js | JavaScript |        691 |         60 |         49 |        800 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\components\trade.vue            | Vue        |        140 |          1 |          2 |        143 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\composables\auth.js             | JavaScript |         12 |          3 |          0 |         15 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\composables\util.js             | JavaScript |         27 |          4 |          1 |         32 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\layouts\components\FHeader.vue  | Vue        |        403 |          8 |          3 |        414 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\layouts\components\FMenu.vue    | Vue        |         91 |          1 |          0 |         92 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\layouts\user.vue                | Vue        |         52 |          3 |          6 |         61 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\main.js                         | JavaScript |         18 |          0 |          5 |         23 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\404.vue                   | Vue        |         13 |          0 |          0 |         13 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\ai\advise.vue             | Vue        |         17 |          0 |          0 |         17 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\ai\future.vue             | Vue        |        305 |          8 |          3 |        316 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\ai\test.vue               | Vue        |        272 |          2 |          0 |        274 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\data\main.vue             | Vue        |        237 |          5 |          2 |        244 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\data\news.vue             | Vue        |         76 |          5 |          0 |         81 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\forget.vue                | Vue        |        192 |          4 |          4 |        200 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\index.vue                 | Vue        |         12 |          0 |          3 |         15 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\login.vue                 | Vue        |        426 |          7 |          6 |        439 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\user\center.vue           | Vue        |        519 |         11 |          0 |        530 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\pages\user\wallet.vue           | Vue        |        272 |          7 |          2 |        281 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\permission.js                   | JavaScript |         20 |         12 |          1 |         33 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\router\index.js                 | JavaScript |         86 |          0 |          2 |         88 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\src\store\index.js                  | JavaScript |         36 |          6 |          0 |         42 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\vite.config.js                      | JavaScript |         21 |          4 |          2 |         27 |
+| c:\Users\MSI\OneDrive\study\code\vscode\getmoney\windi.config.js                     | JavaScript |          0 |          0 |          1 |          1 |
+| Total                                                                                |            |      6,375 |      1,162 |        118 |      7,655 |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

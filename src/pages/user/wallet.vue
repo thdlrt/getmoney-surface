@@ -26,7 +26,7 @@
                             <el-radio :label="num.length" class="h-18 w-90 m-5 rounded-xl" border>
                                 <span class="text-gray-500 m-6 text-sm">自定义金额</span>
                                 <el-input-number v-model="money" :min="100" :max="1000000" step="500"
-                                    controls-position="right" size="large" @change="handleChange" />
+                                    controls-position="right" size="large" />
                             </el-radio>
                         </el-radio-group>
                     </div>
@@ -51,32 +51,32 @@
                         <el-table-column label="持仓数量" prop="value" />
                         <el-table-column label="持仓建议">
                             <template #default="scope">
-                                <el-tooltip v-if="Math.floor(scope.row.price + scope.row.num * 2 - 1) % 3 == 0"
+                                <el-tooltip v-if="Math.floor(scope.row.name.charCodeAt(0)%100)%3==0"
                                     class="box-item" effect="light" content="建议平仓（保持持有量）" placement="bottom-start">
                                     <el-icon class="mr-3">
                                         <Switch class="text-2xl font-bold" />
                                     </el-icon>
                                 </el-tooltip>
-                                <el-tooltip v-if="Math.floor(scope.row.price + scope.row.num * 2 - 1) % 3 == 1"
+                                <el-tooltip v-if="Math.floor(scope.row.name.charCodeAt(0)%100)%3==1"
                                     class="box-item" effect="light" content="建议加仓（增加持有量）" placement="bottom-start">
                                     <div class="flex font-bold text-red-400 justify-center items-center">
                                         <el-icon class="mr-3">
                                             <Upload class="text-2xl" />
                                         </el-icon>
-                                        <span>(-{{
-                                            Math.floor((random * scope.row.num * scope.row.price + 2) / (scope.row.price * 3
+                                        <span>({{
+                                            Math.floor((scope.row.value * scope.row.name.charCodeAt(0) + 2) / (scope.row.name.charCodeAt(1) * 3
                                                 - 2))
                                         }})</span>
                                     </div>
                                 </el-tooltip>
-                                <el-tooltip v-if="Math.floor(scope.row.price + scope.row.num * 2 - 1) % 3 == 2"
+                                <el-tooltip v-if="Math.floor(scope.row.name.charCodeAt(0)%100)%3==2"
                                     class="box-item" effect="light" content="建议减仓（减少持有量）" placement="bottom-start">
                                     <div class="flex font-bold text-green-400 justify-center items-center">
                                         <el-icon class="mr-3">
                                             <Download class="text-2xl" />
                                         </el-icon>
                                         <span>(-{{
-                                            Math.floor((random * scope.row.num * scope.row.price + 2) / (scope.row.price * 3
+                                            Math.floor((scope.row.value * scope.row.name.charCodeAt(0) + 2) / (scope.row.name.charCodeAt(1) * 3
                                                 - 2))
                                         }})</span>
                                     </div>
@@ -150,7 +150,7 @@ const num = ref([500, 1000, 5000, 10000])
 const loadingleft = ref(false)
 const loadingright = ref(false)
 const searchcontent = ref('')
-const user_money = ref(1000)
+const user_money = ref(0)
 const dialogFormVisible = ref(false)
 const loadingdel = ref(false)
 const tradedialog = ref(null)
@@ -162,42 +162,29 @@ const choice = ref({
 const form = ref({
     num: 0,
 })
-//获取伪随机数
-function generateRandomNumberFromDate() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    // 将年、月、日组合成一个字符串
-    const dateString = `${year}${month}${day}`;
-    // 将字符串转换为数字，并取模一个较大的数值范围，如1000
-    const randomNumber = parseInt(dateString) % 1000;
-    return randomNumber;
-}
-const random = ref(generateRandomNumberFromDate() / 1000)
 //界面刷新
 function update() {
-    //初始化表格获取持仓股票
-    ownstock().then(res => {
-        tableData.value = res.stock
-        //删除持有量为0的
-        for (let i = 0; i < tableData.value.length; i++) {
-            if (tableData.value[i].value == 0) {
-                tableData.value.splice(i, 1)
-                i--
+        //初始化表格获取持仓股票
+        ownstock().then(res => {
+            tableData.value = res.stock
+            //删除持有量为0的
+            for (let i = 0; i < tableData.value.length; i++) {
+                if (tableData.value[i].value == 0) {
+                    tableData.value.splice(i, 1)
+                    i--
+                }
             }
-        }
-        //获取价格
-        for (let a of tableData.value) {
-            search(a.name).then((res) => {
-                a.price = res.data[0].value
-            })
-        }
-    })
-    //获取账户余额
-    getmoney().then(res => {
-        user_money.value = res.yue
-    })
+            //获取价格
+            for (let a of tableData.value) {
+                search(a.name).then((res) => {
+                    a.price = res.data[0].value
+                })
+            }
+        })
+        //获取账户余额
+        getmoney().then(res => {
+            user_money.value = res.yue
+        })
 }
 update()
 const up = () => {
@@ -289,4 +276,5 @@ const onsell = (row) => {
 <style>
 .select {
     @apply h-18 w-40 m-5 rounded-xl;
-}</style>
+}
+</style>

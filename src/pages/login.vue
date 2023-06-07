@@ -5,9 +5,9 @@
             <video autoplay loop muted class="absolute h-full w-full object-cover z-0">
                 <source src="../assets/background.mp4" type="video/mp4">
             </video>
-            <div>
+            <el-card class="m-4 rounded-md bg-white" shadow="always">
                 <img src="../assets/logo.png" alt="Logo" class="absolute left-5 top-5 h-16 w-56">
-            </div>
+            </el-card>
             <div style="position: relative; z-index: 1;">
                 <div class="font-bold text-8xl text-light-50 mb-4">Welcome</div>
                 <div class="font-bold text-7xl text-light-50 mb-4">Back!</div>
@@ -352,6 +352,7 @@ const onSubmit2 = () => {
                 util.toast('注册成功,请返回登录');
                 formDrawerRef.value.hideLoading()
                 router.push("/login")
+                formDrawerRef.value.close()
             }).catch(err => {//校验不通过,需要修改
                 formDrawerRef.value.hideLoading()
             })

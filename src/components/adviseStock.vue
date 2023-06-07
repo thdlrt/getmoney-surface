@@ -9,12 +9,12 @@
                         <span class="text-gray-500 ml-2">({{ props.id }})</span>
                     </div>
                     <div class="flex justify-center items-center"
-                        :style="{ color: props.changeprice > 0 ? 'red' : 'green' }">
+                        :style="{ color: props.changerate > 0 ? 'red' : 'green' }">
                         <span class="text-2xl">{{ props.price }}</span>
-                        <up-two v-if="props.changeprice > 0" theme="filled" size="28" fill="#ff0020" />
+                        <up-two v-if="props.changerate > 0" theme="filled" size="28" fill="#ff0020" />
                         <down-two v-else theme="filled" size="28" fill="#447a04" />
                         <div style="display: inline-block;" class="ml-1">
-                            <div class="text-xs">{{ props.changeprice }}</div>
+                            <!-- <div class="text-xs">{{ props.changeprice }}</div> -->
                             <div class="text-xs">{{ props.changerate }}%</div>
                         </div>
                     </div>
